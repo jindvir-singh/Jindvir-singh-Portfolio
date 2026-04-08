@@ -1,1056 +1,823 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jindvir Singh</title>
-
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/memoji.png" type="image/x-icon">
-
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!--
-    - google font link
-  -->
+  <title>Jindvir Singh — Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-</head>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --blue-900: #042C53;
+      --blue-800: #0C447C;
+      --blue-700: #185FA5;
+      --blue-600: #2171C7;
+      --blue-500: #378ADD;
+      --blue-400: #5FA3E8;
+      --blue-200: #85B7EB;
+      --blue-100: #B5D4F4;
+      --blue-50:  #E6F1FB;
+      --blue-25:  #F0F7FD;
+      --white: #ffffff;
+      --gray-50: #F8F9FB;
+      --gray-100: #F0F2F5;
+      --gray-200: #E2E6EC;
+      --gray-300: #C8D0DA;
+      --gray-500: #8896A5;
+      --gray-700: #3D4F61;
+      --gray-900: #0F1D2B;
+      --border: #E2E6EC;
+      --shadow-sm: 0 1px 3px rgba(15,29,43,0.06), 0 1px 2px rgba(15,29,43,0.04);
+      --shadow-md: 0 4px 16px rgba(15,29,43,0.08), 0 2px 6px rgba(15,29,43,0.05);
+      --shadow-lg: 0 12px 40px rgba(15,29,43,0.10), 0 4px 12px rgba(15,29,43,0.06);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--gray-900); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--gray-100); }
+    ::-webkit-scrollbar-thumb { background: var(--blue-400); border-radius: 2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 60px; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark {
+      width: 36px; height: 36px; background: var(--blue-700); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: #fff;
+    }
+    .logo-text { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 600; color: var(--gray-900); }
+    .logo-text span { color: var(--blue-700); }
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a {
+      display: block; padding: 8px 14px; font-size: 14px; font-weight: 500;
+      color: var(--gray-700); text-decoration: none; border-radius: 8px; transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { background: var(--blue-50); color: var(--blue-700); }
+    .nav-links a.active { font-weight: 600; }
+    .nav-cta { padding: 9px 20px !important; background: var(--blue-700) !important; color: #fff !important; border-radius: 8px !important; font-weight: 600 !important; }
+    .nav-cta:hover { background: var(--blue-800) !important; color: #fff !important; }
+    .nav-mobile-btn { display: none; background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 10px; cursor: pointer; color: var(--gray-700); font-size: 18px; }
+
+    /* HERO */
+    #hero {
+      padding-top: 68px; min-height: 100vh;
+      display: flex; align-items: center;
+      background: linear-gradient(160deg, var(--white) 0%, var(--blue-25) 55%, var(--blue-50) 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero-dots {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(55,138,221,0.13) 1px, transparent 1px);
+      background-size: 40px 40px; pointer-events: none;
+      mask-image: radial-gradient(ellipse 80% 80% at 60% 50%, black 30%, transparent 80%);
+    }
+    .hero-blob {
+      position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none;
+    }
+    .hero-blob-1 { width: 600px; height: 600px; background: rgba(55,138,221,0.11); top: -100px; right: -150px; animation: floatBlob 12s ease-in-out infinite; }
+    .hero-blob-2 { width: 350px; height: 350px; background: rgba(33,113,199,0.07); bottom: -60px; left: 80px; animation: floatBlob 15s ease-in-out infinite reverse; }
+    @keyframes floatBlob { 0%,100% { transform: translate(0,0); } 50% { transform: translate(20px,-15px); } }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto; padding: 80px 60px;
+      display: grid; grid-template-columns: 1fr 400px; gap: 80px; align-items: center; width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; background: var(--blue-50); border: 1px solid var(--blue-100);
+      border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--blue-700); margin-bottom: 22px;
+      opacity: 0; animation: fadeUp 0.6s forwards 0.2s;
+    }
+    .hero-badge .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; animation: pulseDot 2s infinite; }
+    @keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); } 50% { box-shadow: 0 0 0 4px rgba(34,197,94,0); } }
+    .hero-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(42px, 5vw, 68px); font-weight: 800;
+      line-height: 1.07; letter-spacing: -0.03em; color: var(--gray-900); margin-bottom: 18px;
+      opacity: 0; animation: fadeUp 0.6s forwards 0.35s;
+    }
+    .hero-title .hl { color: var(--blue-700); }
+    .hero-sub {
+      font-size: 16px; color: var(--gray-500); line-height: 1.85; margin-bottom: 34px; max-width: 540px;
+      opacity: 0; animation: fadeUp 0.6s forwards 0.5s;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.6s forwards 0.65s; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(22px); } to { opacity:1; transform: none; } }
+
+    .btn-blue {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; background: var(--blue-700); color: #fff;
+      font-size: 14px; font-weight: 600; border-radius: 10px; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(24,95,165,0.28); transition: all 0.2s;
+    }
+    .btn-blue:hover { background: var(--blue-800); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(24,95,165,0.38); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; border: 1.5px solid var(--gray-300); color: var(--gray-700);
+      font-size: 14px; font-weight: 600; border-radius: 10px; text-decoration: none;
+      background: var(--white); transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--blue-400); color: var(--blue-700); background: var(--blue-25); }
+
+    /* Hero profile card */
+    .profile-card {
+      background: var(--white); border-radius: 20px;
+      box-shadow: var(--shadow-lg); border: 1px solid var(--border); overflow: hidden;
+      opacity: 0; animation: fadeUp 0.7s forwards 0.8s;
+    }
+    .pc-header {
+      background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-500) 100%);
+      padding: 28px; text-align: center;
+    }
+    .pc-avatar {
+      width: 76px; height: 76px; background: rgba(255,255,255,0.2); border-radius: 50%;
+      margin: 0 auto 14px; display: flex; align-items: center; justify-content: center;
+      font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 800; color: #fff;
+      border: 3px solid rgba(255,255,255,0.35);
+    }
+    .pc-name { font-family: 'Sora', sans-serif; font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .pc-role { font-size: 13px; color: rgba(255,255,255,0.72); }
+    .pc-body { padding: 6px 0; }
+    .pc-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 20px; border-bottom: 1px solid var(--gray-100); font-size: 13px;
+    }
+    .pc-row:last-child { border-bottom: none; }
+    .pc-icon {
+      width: 32px; height: 32px; background: var(--blue-50); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
+    }
+    .pc-lbl { font-size: 11px; color: var(--gray-500); }
+    .pc-val { font-size: 13px; font-weight: 500; color: var(--gray-900); }
+    .pc-val a { color: var(--blue-700); text-decoration: none; }
+    .open-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; background: #f0fdf4; border: 1px solid #bbf7d0;
+      border-radius: 100px; font-size: 12px; color: #15803d; font-weight: 500;
+    }
+    .open-chip::before { content: ''; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
+
+    /* STATS */
+    .stats-strip { background: var(--blue-700); }
+    .stats-grid {
+      max-width: 1200px; margin: 0 auto; padding: 0 60px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .stat-item {
+      padding: 34px 20px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.12); transition: background 0.2s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(255,255,255,0.05); }
+    .stat-num { font-family: 'Sora', sans-serif; font-size: 36px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 5px; }
+    .stat-lbl { font-size: 11px; color: rgba(255,255,255,0.6); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* SECTIONS */
+    .section { padding: 96px 0; }
+    .section-alt { background: var(--gray-50); }
+    .section-blue { background: var(--blue-25); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+
+    .sec-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 12px; background: var(--blue-50); border: 1px solid var(--blue-100);
+      border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--blue-700); font-weight: 500; margin-bottom: 14px;
+    }
+    .sec-label::before { content: ''; width: 6px; height: 6px; background: var(--blue-500); border-radius: 50%; }
+    .sec-title {
+      font-family: 'Sora', sans-serif; font-size: clamp(28px, 3.2vw, 42px); font-weight: 800;
+      color: var(--gray-900); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 10px;
+    }
+    .sec-title span { color: var(--blue-700); }
+    .sec-desc { font-size: 15px; color: var(--gray-500); line-height: 1.8; max-width: 560px; }
+    .sec-hdr { margin-bottom: 52px; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .about-text p { font-size: 15px; line-height: 1.9; color: var(--gray-700); margin-bottom: 18px; }
+    .about-quote {
+      background: var(--blue-50); border-left: 3px solid var(--blue-500);
+      border-radius: 0 10px 10px 0; padding: 18px 22px; margin-top: 28px;
+      font-size: 15px; font-style: italic; color: var(--blue-800); line-height: 1.7;
+    }
+    .info-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
+    .ic-header { background: linear-gradient(135deg, var(--blue-700), var(--blue-500)); padding: 18px 22px; }
+    .ic-header h3 { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
+    .ic-header p { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 1px; }
+    .ic-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 22px; border-bottom: 1px solid var(--gray-100); font-size: 13px; }
+    .ic-row:last-child { border-bottom: none; }
+    .ic-key { color: var(--gray-500); }
+    .ic-val { color: var(--gray-900); font-weight: 500; text-align: right; }
+    .ic-val a { color: var(--blue-700); text-decoration: none; }
+
+    .svc-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 60px; }
+    .svc-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 16px;
+      padding: 26px; transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .svc-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue-700), var(--blue-400));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .svc-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .svc-card:hover::before { transform: scaleX(1); }
+    .svc-icon { width: 46px; height: 46px; background: var(--blue-50); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 14px; }
+    .svc-name { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+    .svc-desc { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
+
+    /* EXPERIENCE */
+    .exp-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-sm); }
+    .exp-top {
+      display: flex; align-items: center; gap: 18px;
+      padding: 24px 28px; border-bottom: 1px solid var(--gray-100); background: var(--gray-50);
+    }
+    .co-logo {
+      width: 52px; height: 52px; background: var(--blue-700); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .exp-role-name { font-family: 'Sora', sans-serif; font-size: 19px; font-weight: 700; color: var(--gray-900); }
+    .exp-co-line { font-size: 13px; color: var(--gray-500); display: flex; align-items: center; gap: 10px; margin-top: 3px; }
+    .period-chip {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+      background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 100px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-700); margin-left: auto;
+    }
+    .exp-body { padding: 28px; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 26px; }
+    .metric-box { background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 12px; padding: 14px 10px; text-align: center; }
+    .metric-val { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; color: var(--blue-700); margin-bottom: 3px; }
+    .metric-lbl { font-size: 11px; color: var(--gray-500); line-height: 1.4; }
+    .exp-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+    .exp-list li { display: flex; gap: 12px; font-size: 14px; color: var(--gray-700); line-height: 1.7; }
+    .exp-bullet {
+      width: 22px; height: 22px; background: var(--blue-50); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      margin-top: 2px; font-size: 11px; color: var(--blue-700); font-weight: 700;
+    }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      padding: 4px 11px; background: var(--gray-100); border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray-700); transition: all 0.2s;
+    }
+    .tag:hover { background: var(--blue-50); color: var(--blue-700); }
+
+    /* SKILLS */
+    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
+    .skill-sec-title { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 24px; padding-bottom: 10px; border-bottom: 2px solid var(--blue-100); }
+    .skill-item { margin-bottom: 20px; }
+    .skill-row { display: flex; justify-content: space-between; margin-bottom: 7px; align-items: center; }
+    .skill-name { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+    .skill-pct { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue-600); font-weight: 500; }
+    .skill-track { height: 8px; background: var(--gray-200); border-radius: 100px; overflow: hidden; }
+    .skill-fill { height: 100%; background: linear-gradient(90deg, var(--blue-700), var(--blue-400)); border-radius: 100px; width: 0; transition: width 1.2s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .tech-item {
+      background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+      padding: 11px 13px; font-size: 13px; font-weight: 500; color: var(--gray-700);
+      display: flex; align-items: center; gap: 8px; transition: all 0.2s; cursor: default;
+    }
+    .tech-item:hover { border-color: var(--blue-400); background: var(--blue-25); color: var(--blue-700); }
+    .tech-dot { width: 7px; height: 7px; background: var(--blue-400); border-radius: 50%; flex-shrink: 0; }
+
+    /* PROJECTS */
+    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .proj-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 16px;
+      padding: 22px; display: flex; flex-direction: column; gap: 10px; transition: all 0.3s;
+    }
+    .proj-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: var(--blue-200); }
+    .proj-card.featured { background: var(--blue-25); border-color: var(--blue-100); }
+    .proj-type { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue-600); font-weight: 500; }
+    .proj-name { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: var(--gray-900); }
+    .proj-desc { font-size: 13px; color: var(--gray-500); line-height: 1.7; flex: 1; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .proj-tag { padding: 3px 8px; background: var(--blue-50); border-radius: 5px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--blue-700); }
+    .proj-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--blue-700); text-decoration: none; margin-top: 4px; transition: gap 0.2s; }
+    .proj-link:hover { gap: 10px; }
+    .proj-prop { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+
+    /* CERTS */
+    .certs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .cert-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 22px; display: flex; gap: 16px; align-items: flex-start; transition: all 0.3s; }
+    .cert-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .cert-logo { width: 46px; height: 46px; background: var(--blue-50); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .cert-issuer { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue-600); margin-bottom: 4px; }
+    .cert-name { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 5px; line-height: 1.4; }
+    .cert-detail { font-size: 12px; color: var(--gray-500); line-height: 1.6; }
+
+    /* EDUCATION */
+    .edu-list { display: flex; flex-direction: column; gap: 18px; }
+    .edu-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 22px 26px; display: flex; align-items: center; gap: 20px; transition: all 0.3s; }
+    .edu-card:hover { box-shadow: var(--shadow-md); border-color: var(--blue-200); }
+    .edu-yr { min-width: 110px; padding: 7px 12px; background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-700); text-align: center; }
+    .edu-school { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: var(--gray-900); margin-bottom: 3px; }
+    .edu-deg { font-size: 13px; color: var(--gray-500); }
+    .edu-grade { margin-left: auto; padding: 6px 13px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #15803d; white-space: nowrap; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; }
+    .contact-title { font-family: 'Sora', sans-serif; font-size: 34px; font-weight: 800; color: var(--gray-900); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .contact-title span { color: var(--blue-700); }
+    .contact-desc { font-size: 15px; color: var(--gray-500); line-height: 1.8; margin-bottom: 32px; }
+    .cl-list { display: flex; flex-direction: column; }
+    .cl-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); text-decoration: none; transition: padding-left 0.2s; }
+    .cl-item:first-child { border-top: 1px solid var(--gray-100); }
+    .cl-item:hover { padding-left: 8px; }
+    .cl-icon { width: 38px; height: 38px; background: var(--blue-50); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; transition: background 0.2s; }
+    .cl-item:hover .cl-icon { background: var(--blue-100); }
+    .cl-type { font-size: 11px; color: var(--gray-500); }
+    .cl-val { font-size: 13px; font-weight: 500; color: var(--gray-900); transition: color 0.2s; }
+    .cl-item:hover .cl-val { color: var(--blue-700); }
+    .cl-arr { margin-left: auto; font-size: 15px; color: var(--gray-300); transition: all 0.2s; }
+    .cl-item:hover .cl-arr { color: var(--blue-500); transform: translateX(4px); }
+
+    .form-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: var(--shadow-sm); }
+    .form-ttl { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: var(--gray-900); margin-bottom: 22px; }
+    .form-row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fg { margin-bottom: 14px; }
+    .form-lbl { display: block; font-size: 12px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+    .form-ctrl {
+      width: 100%; padding: 10px 13px; border: 1.5px solid var(--gray-200); border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: var(--gray-900);
+      background: var(--white); outline: none; transition: border-color 0.2s;
+    }
+    .form-ctrl:focus { border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(55,138,221,0.1); }
+    .form-ctrl::placeholder { color: var(--gray-300); }
+    textarea.form-ctrl { resize: vertical; min-height: 100px; }
+    .btn-submit {
+      width: 100%; padding: 13px; background: var(--blue-700); color: #fff;
+      font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700;
+      border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(24,95,165,0.22); margin-top: 2px;
+    }
+    .btn-submit:hover { background: var(--blue-800); transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer { background: var(--gray-900); padding: 36px 60px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.4); }
+    .footer-copy span { color: var(--blue-400); }
+    .footer-links { display: flex; gap: 22px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--blue-400); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-mobile-btn { display: block; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+      .profile-card { max-width: 380px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); padding: 0 24px; }
+      .container { padding: 0 24px; }
+      .about-grid, .skills-layout, .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+      .svc-row, .proj-grid { grid-template-columns: 1fr; }
+      .certs-grid { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 14px; text-align: center; padding: 24px; }
+      .edu-card { flex-wrap: wrap; }
+      .edu-grade { margin-left: 0; }
+      .form-row-grid { grid-template-columns: 1fr; }
+      .exp-top { flex-wrap: wrap; gap: 12px; }
+      .period-chip { margin-left: 0; }
+    }
+  </style>
+</head>
 <body>
 
-  <!--
-    - #MAIN
-  -->
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="logo-mark">JS</div>
+    <span class="logo-text">Jindvir<span>.</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about" data-section="about">About</a></li>
+    <li><a href="#experience" data-section="experience">Experience</a></li>
+    <li><a href="#skills" data-section="skills">Skills</a></li>
+    <li><a href="#projects" data-section="projects">Projects</a></li>
+    <li><a href="#certs" data-section="certs">Certifications</a></li>
+    <li><a href="#education" data-section="education">Education</a></li>
+    <li><a href="#contact" class="nav-cta" data-section="contact">Contact</a></li>
+  </ul>
+  <button class="nav-mobile-btn" id="mobileMenuBtn">☰</button>
+</nav>
 
-  <main>
+<!-- Mobile nav drawer -->
+<div id="mobileMenu" style="display:none; position:fixed; top:68px; left:0; right:0; background:white; border-bottom:1px solid var(--border); z-index:999; padding:12px 20px; box-shadow:var(--shadow-md);">
+  <ul style="list-style:none; display:flex; flex-direction:column; gap:2px;">
+    <li><a href="#about" style="display:block;padding:10px 14px;border-radius:8px;font-size:15px;font-weight:500;color:var(--gray-700);text-decoration:none;" onclick="closeMobile()">About</a></li>
+    <li><a href="#experience" style="display:block;padding:10px 14px;border-radius:8px;font-size:15px;font-weight:500;color:var(--gray-700);text-decoration:none;" onclick="closeMobile()">Experience</a></li>
+    <li><a href="#skills" style="display:block;padding:10px 14px;border-radius:8px;font-size:15px;font-weight:500;color:var(--gray-700);text-decoration:none;" onclick="closeMobile()">Skills</a></li>
+    <li><a href="#projects" style="display:block;padding:10px 14px;border-radius:8px;font-size:15px;font-weight:500;color:var(--gray-700);text-decoration:none;" onclick="closeMobile()">Projects</a></li>
+    <li><a href="#certs" style="display:block;padding:10px 14px;border-radius:8px;font-size:15px;font-weight:500;color:var(--gray-700);text-decoration:none;" onclick="closeMobile()">Certifications</a></li>
+    <li><a href="#education" style="display:block;padding:10px 14px;border-radius:8px;font-size:15px;font-weight:500;color:var(--gray-700);text-decoration:none;" onclick="closeMobile()">Education</a></li>
+    <li><a href="#contact" style="display:block;padding:10px 14px;border-radius:8px;font-size:15px;font-weight:600;color:var(--blue-700);text-decoration:none;background:var(--blue-50);" onclick="closeMobile()">Contact</a></li>
+  </ul>
+</div>
 
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./assets/images/memoji.png" alt="Jindvir Singh" width="80">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Jindvir Singh">Jindvir Singh</h1>
-
-          <p class="title">Software Engineer</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><div class="dot"></div>Available · Currently at Consilium Software</div>
+      <h1 class="hero-title">Building <span class="hl">Real-Time</span><br>Communication<br>Systems</h1>
+      <p class="hero-sub">Software Engineer specializing in WebRTC, SIP protocols, mobile SDKs, and high-availability backend infrastructure. Creating seamless voice & video experiences for enterprise clients.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-blue">Get in Touch →</a>
+        <a href="#projects" class="btn-outline">View My Work</a>
+        <a href="https://linkedin.com/in/jindvir-singh" target="_blank" class="btn-outline">LinkedIn ↗</a>
       </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:jindvirsingh00@icloud.com" class="contact-link">
-                jindvirsingh00@icloud.com
-              </a>
-                          </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-
-              <a href="tel:+91-9876783493" class="contact-link">+91-9876783493</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="2002-12-29">December 29, 2002</time>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Kalanaur, Punjab, India</address>
-            </div>
-
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="https://www.facebook.com/profile.php?id=100090570822629&mibextid=LQQJ4d" target="_blank" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://twitter.com/jindvir_" class="social-link" target="_blank">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://www.instagram.com/jindvirsingh/" target="_blank" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </aside>
-
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
-
-          <!-- <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li> -->
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            I am a Software Engineer specializing in real-time communication systems, with hands-on experience in WebRTC, Node.js, and media servers such as Janus.
-            
-          </p>
-        
-          <p>
-            Currently at Consilium Software, I design and deliver scalable voice and video solutions, including silent monitoring, peer-to-peer calling, and secure video broadcasting platforms used by enterprise clients.
-          </p>
-        </section>
-        
-
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-
-          <h3 class="h3 service-title">What i'm doing</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">WebRTC & SIP Systems</h4>
-                <p class="service-item-text">
-                  Real-time voice, video, and monitoring solutions using WebRTC, Janus, and Node.js.
-                </p>
-              </div>
-            </li>
-          
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mobile App Development</h4>
-                <p class="service-item-text">
-                  Native Android & iOS apps using Kotlin and Swift with real-time features.
-                </p>
-              </div>
-            </li>
-          
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Backend & Infrastructure</h4>
-                <p class="service-item-text">
-                  Secure Node.js backends, media servers, and high-availability deployments.
-                </p>
-              </div>
-            </li>
-          
-          </ul>
-          
-
-        </section>
-
-
-        <!--
-          - testimonials
-        -->
-
-        <!-- <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </section>
- -->
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content">
-
-              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
-
-              <time datetime="2021-06-14">14 June, 2021</time>
-
-              <div data-modal-text>
-                <p>
-                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                  lot of experience
-                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                  consectetur adipiscing
-                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                </p>
-              </div>
-
-            </div>
-
-          </section>
-
-        </div>
-
-
-        <!--
-          - clients
-        -->
-
-        <!-- <section class="clients">
-
-          <h3 class="h3 clients-title">Clients</h3>
-
-          <ul class="clients-list has-scrollbar">
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-1-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-2-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-3-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-4-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-5-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-6-color.png" alt="client logo">
-              </a>
-            </li>
-
-          </ul>
-
-        </section> -->
-
-      </article>
-
-
-
-
-
-      <!--
-        - #RESUME
-      -->
-
-      <article class="resume" data-page="resume">
-
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Education</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Chandigarh University</h4>
-
-              <span>2020 — 2024</span>
-
-              <p class="timeline-text">
-                Currently pursuing Bachelors of engineering in Computer Science & Engineering with 7.54 CGPA.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Army Public School, Beas</h4>
-
-              <span>2019-2020</span>
-
-              <p class="timeline-text">
-                Completed my 12th with 84.2 percentage in PCM stream.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Army Public School, Beas</h4>
-
-              <span>2017 — 2018</span>
-
-              <p class="timeline-text">
-                Completed my high school with 82.6 percentage.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="briefcase-outline"></ion-icon>
-            </div>
-            <h3 class="h3">Experience</h3>
-          </div>
-        
-          <ol class="timeline-list">
-        
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">
-                Junior Software Engineer – Consilium Software
-              </h4>
-        
-              <span>Jun 2024 — Present</span>
-        
-              <p class="timeline-text">
-                • Built WebRTC-based silent monitoring using Node.js & Janus, improving
-                compliance efficiency by 30%.<br>
-                • Developed peer-to-peer video calling SDKs (Android & iOS) supporting
-                1,000+ DAU with 25% lower call latency.<br>
-                • Designed secure video broadcasting with PIN-based authentication,
-                reducing unauthorized access by 70%.<br>
-                • Led infrastructure improvements achieving 99.9% uptime.
-              </p>
-            </li>
-        
-          </ol>
-        
-        </section>
-        
-
-          <!-- <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Experience</h3>
-          </div> -->
-
-
-        <section class="skill">
-
-          <h3 class="h3 skills-title">My skills</h3>
-
-          <ul class="skills-list content-card">
-
-            <li class="skills-item">
-              <div class="title-wrapper">
-                <h5 class="h5">WebRTC / Janus / SIP</h5>
-                <data value="85">85%</data>
-              </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 85%;"></div>
-              </div>
-            </li>
-          
-            <li class="skills-item">
-              <div class="title-wrapper">
-                <h5 class="h5">Node.js & Backend Systems</h5>
-                <data value="80">80%</data>
-              </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
-              </div>
-            </li>
-          
-            <li class="skills-item">
-              <div class="title-wrapper">
-                <h5 class="h5">Android (Kotlin) & iOS (Swift)</h5>
-                <data value="75">75%</data>
-              </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 75%;"></div>
-              </div>
-            </li>
-          
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-
-        <section class="projects">
-
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>App design</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Applications</button>
-            </li>
-
-          </ul>
-
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>App design</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
-
-              <!-- <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li> -->
-
-            </ul>
-
-          </div>
-
-          <ul class="project-list">
-
-            
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="https://github.com/jindvir00" target="_blank">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/blue_pic.png" alt="blue" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Blue</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="app design">
-              <a href="https://www.figma.com/@jindvir00" target="_blank">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/Dieta_1.png" alt="dsm." loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Dieta</h3>
-
-                <p class="project-category">App design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="app design">
-              <a href="https://www.figma.com/@jindvir00" target="_blank">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/make it.png" alt="metaspark" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Makeit</h3>
-
-                <p class="project-category">App design</p>
-
-              </a>
-            </li>
-
-          
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="https://github.com/jindvir00" target="_blank">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/stopwatch.png" alt="stopwatch" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Stopwatch</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-            <li class="project-item  active" data-filter-item data-category="app design">
-              <a href="https://www.figma.com/@jindvir00" target="_blank">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/cooma.png" alt="metaspark" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Cooma</h3>
-
-                <p class="project-category">App design</p>
-
-              </a>
-            </li>
-
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #BLOG
-      -->
-
-      <!-- <article class="blog" data-page="blog">
-
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
-
-                  <p class="blog-text">
-                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
-
-                  <p class="blog-text">
-                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #80</h3>
-
-                  <p class="blog-text">
-                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
-
-                  <p class="blog-text">
-                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-
-                  <p class="blog-text">
-                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #79</h3>
-
-                  <p class="blog-text">
-                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article> -->
-
-
-
-
-
-      <!--
-        - #CONTACT
-      -->
-
-      <article class="contact" data-page="contact">
-
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13532.528807459626!2d75.13784754927754!3d32.011532428851616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391bfaab75094ce3%3A0x3b4ec4899c133b37!2sKalanaur%2C%20Punjab%20143512!5e0!3m2!1sen!2sin!4v1703403854661!5m2!1sen!2sin"
-              width="400" height="300" loading="lazy"></iframe>
-          </figure>
-        </section>
-
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="mailto:jindvir7800@gmail.com" class="form" data-form>
-
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
-            </div>
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
-
-          </form>
-
-        </section>
-
-      </article>
-
     </div>
+    <div>
+      <div class="profile-card">
+        <div class="pc-header">
+          <div class="pc-avatar">JS</div>
+          <div class="pc-name">Jindvir Singh</div>
+          <div class="pc-role">Junior Software Engineer @ Consilium Software</div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-row">
+            <div class="pc-icon">📍</div>
+            <div><div class="pc-lbl">Location</div><div class="pc-val">New Delhi, India</div></div>
+          </div>
+          <div class="pc-row">
+            <div class="pc-icon">✉️</div>
+            <div><div class="pc-lbl">Email</div><div class="pc-val"><a href="mailto:jindvirsingh00@icloud.com">jindvirsingh00@icloud.com</a></div></div>
+          </div>
+          <div class="pc-row">
+            <div class="pc-icon">🎓</div>
+            <div><div class="pc-lbl">Education</div><div class="pc-val">B.E. CSE · Chandigarh University</div></div>
+          </div>
+          <div class="pc-row">
+            <div class="pc-icon">⚡</div>
+            <div><div class="pc-lbl">Status</div><div class="pc-val"><span class="open-chip">Open to opportunities</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  </main>
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div class="stat-item"><div class="stat-num" data-count="1">0</div><div class="stat-lbl">Year Experience</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="3">0</div><div class="stat-lbl">Enterprise Clients</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="1000">0</div><div class="stat-lbl">Daily Active Users</div></div>
+    <div class="stat-item"><div class="stat-num">99.9<small style="font-size:16px">%</small></div><div class="stat-lbl">Uptime Delivered</div></div>
+  </div>
+</div>
 
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="sec-hdr reveal">
+      <div class="sec-label">About Me</div>
+      <h2 class="sec-title">The Engineer <span>Behind the Stack</span></h2>
+      <p class="sec-desc">Passionate about real-time systems, clean APIs, and seamless experiences across web and mobile.</p>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="about-text">
+          <p>I'm a <strong>Software Engineer</strong> specializing in real-time communication systems, with deep expertise in <strong>WebRTC</strong>, Node.js, and media servers like Janus Gateway.</p>
+          <p>Currently at <strong>Consilium Software</strong>, I design and deliver scalable voice and video solutions — including silent monitoring, peer-to-peer calling, and secure video broadcasting platforms used by enterprise clients.</p>
+          <p>My work bridges complex protocol-level engineering with clean, maintainable code — whether building native mobile SDKs or architecting infrastructure that achieves 99.9% uptime.</p>
+        </div>
+        <div class="about-quote">"Building the invisible infrastructure that makes real-time communication feel effortless — for supervisors, agents, and enterprise teams alike."</div>
+      </div>
+      <div class="reveal">
+        <div class="info-card">
+          <div class="ic-header"><h3>Quick Info</h3><p>Personal & Professional Details</p></div>
+          <div class="ic-row"><span class="ic-key">Full Name</span><span class="ic-val">Jindvir Singh</span></div>
+          <div class="ic-row"><span class="ic-key">Location</span><span class="ic-val">New Delhi, IN</span></div>
+          <div class="ic-row"><span class="ic-key">Email</span><span class="ic-val"><a href="mailto:jindvirsingh00@icloud.com">jindvirsingh00@icloud.com</a></span></div>
+          <div class="ic-row"><span class="ic-key">Phone</span><span class="ic-val">+91-9876783493</span></div>
+          <div class="ic-row"><span class="ic-key">LinkedIn</span><span class="ic-val"><a href="https://linkedin.com/in/jindvir-singh" target="_blank">linkedin.com/in/jindvir-singh</a></span></div>
+          <div class="ic-row"><span class="ic-key">GitHub</span><span class="ic-val"><a href="https://github.com/jindvir-singh" target="_blank">github.com/jindvir-singh</a></span></div>
+          <div class="ic-row"><span class="ic-key">Figma</span><span class="ic-val"><a href="https://www.figma.com/@jindvir00" target="_blank">@jindvir00</a></span></div>
+          <div class="ic-row"><span class="ic-key">Status</span><span class="ic-val"><span class="open-chip">Open to work</span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-card reveal"><div class="svc-icon">📡</div><div class="svc-name">WebRTC & SIP Systems</div><div class="svc-desc">Real-time voice, video, and monitoring solutions using WebRTC, Janus Gateway, and Node.js signaling servers for enterprise contact centers.</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">📱</div><div class="svc-name">Mobile SDK Development</div><div class="svc-desc">Native Android (Kotlin) & iOS (Swift) apps and SDKs with peer-to-peer calling, screen sharing, and secure authentication flows.</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">⚙️</div><div class="svc-name">Backend & Infrastructure</div><div class="svc-desc">Secure Node.js backends, media server deployments, and high-availability architecture achieving 99.9% uptime for enterprise clients.</div></div>
+    </div>
+  </div>
+</section>
 
+<!-- EXPERIENCE -->
+<section id="experience" class="section section-alt">
+  <div class="container">
+    <div class="sec-hdr reveal">
+      <div class="sec-label">Experience</div>
+      <h2 class="sec-title">Where I've <span>Made an Impact</span></h2>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-top">
+        <div class="co-logo">CS</div>
+        <div>
+          <div class="exp-role-name">Junior Software Engineer</div>
+          <div class="exp-co-line"><span>Consilium Software</span><span>·</span><span>📍 New Delhi, IN</span><span>·</span><span>Full-time</span></div>
+        </div>
+        <div class="period-chip">Jun 2024 — Present</div>
+      </div>
+      <div class="exp-body">
+        <div class="metrics-row">
+          <div class="metric-box"><div class="metric-val">30%</div><div class="metric-lbl">Compliance Efficiency Gain</div></div>
+          <div class="metric-box"><div class="metric-val">25%</div><div class="metric-lbl">Lower Call Latency</div></div>
+          <div class="metric-box"><div class="metric-val">70%</div><div class="metric-lbl">Less Unauthorized Access</div></div>
+          <div class="metric-box"><div class="metric-val">99.9%</div><div class="metric-lbl">Uptime Achieved</div></div>
+        </div>
+        <ul class="exp-list">
+          <li><div class="exp-bullet">→</div><span>Implemented WebRTC-based <strong>silent monitoring</strong> with Node.js & Janus, enabling supervisors to observe live calls without disruption — improving compliance monitoring efficiency by 30%.</span></li>
+          <li><div class="exp-bullet">→</div><span>Developed native <strong>peer-to-peer video calling</strong> apps and SDKs for Android & iOS, reducing call setup latency by 25% and supporting 1,000+ daily active users.</span></li>
+          <li><div class="exp-bullet">→</div><span>Engineered a <strong>secure video broadcasting platform</strong> with PIN-based authentication and session management, cutting unauthorized access attempts by 70%.</span></li>
+          <li><div class="exp-bullet">→</div><span>Led <strong>infrastructure migration and reliability improvements</strong>, achieving 99.9% uptime and on-time delivery across 3 enterprise clients.</span></li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">WebRTC</span><span class="tag">Janus Gateway</span><span class="tag">Node.js</span>
+          <span class="tag">Android · Kotlin</span><span class="tag">iOS · Swift</span>
+          <span class="tag">SIP / VoIP</span><span class="tag">Infrastructure</span><span class="tag">Azure TFS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- SKILLS -->
+<section id="skills" class="section section-blue">
+  <div class="container">
+    <div class="sec-hdr reveal">
+      <div class="sec-label">Skills</div>
+      <h2 class="sec-title">Technical <span>Toolkit</span></h2>
+      <p class="sec-desc">Core technologies I work with daily — from real-time protocols to mobile development and beyond.</p>
+    </div>
+    <div class="skills-layout">
+      <div class="reveal">
+        <div class="skill-sec-title">Core Proficiencies</div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">WebRTC / Janus / SIP</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Node.js & Backend Systems</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" data-width="80"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Android (Kotlin)</span><span class="skill-pct">75%</span></div><div class="skill-track"><div class="skill-fill" data-width="75"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">iOS (Swift)</span><span class="skill-pct">70%</span></div><div class="skill-track"><div class="skill-fill" data-width="70"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">JavaScript / React</span><span class="skill-pct">72%</span></div><div class="skill-track"><div class="skill-fill" data-width="72"></div></div></div>
+        <div class="skill-item"><div class="skill-row"><span class="skill-name">Java / C++</span><span class="skill-pct">68%</span></div><div class="skill-track"><div class="skill-fill" data-width="68"></div></div></div>
+      </div>
+      <div class="reveal">
+        <div class="skill-sec-title">Technologies & Tools</div>
+        <div class="tech-grid">
+          <div class="tech-item"><div class="tech-dot"></div>WebRTC</div>
+          <div class="tech-item"><div class="tech-dot"></div>Janus</div>
+          <div class="tech-item"><div class="tech-dot"></div>Node.js</div>
+          <div class="tech-item"><div class="tech-dot"></div>Kotlin</div>
+          <div class="tech-item"><div class="tech-dot"></div>Swift</div>
+          <div class="tech-item"><div class="tech-dot"></div>React</div>
+          <div class="tech-item"><div class="tech-dot"></div>JavaScript</div>
+          <div class="tech-item"><div class="tech-dot"></div>Java</div>
+          <div class="tech-item"><div class="tech-dot"></div>C / C++</div>
+          <div class="tech-item"><div class="tech-dot"></div>MySQL</div>
+          <div class="tech-item"><div class="tech-dot"></div>REST APIs</div>
+          <div class="tech-item"><div class="tech-dot"></div>Git</div>
+          <div class="tech-item"><div class="tech-dot"></div>Azure TFS</div>
+          <div class="tech-item"><div class="tech-dot"></div>Android Studio</div>
+          <div class="tech-item"><div class="tech-dot"></div>Xcode</div>
+          <div class="tech-item"><div class="tech-dot"></div>Postman</div>
+          <div class="tech-item"><div class="tech-dot"></div>Figma</div>
+          <div class="tech-item"><div class="tech-dot"></div>VS Code</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="sec-hdr reveal">
+      <div class="sec-label">Projects</div>
+      <h2 class="sec-title">Selected <span>Work</span></h2>
+      <p class="sec-desc">A mix of personal builds, design explorations, and enterprise-grade solutions.</p>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="proj-type">Mobile App · Feb–Mar 2024</div>
+        <div class="proj-name">MeetNow</div>
+        <div class="proj-desc">Native mobile app enabling instant peer-to-peer voice & video calls with real-time screen sharing and secure authentication flows.</div>
+        <div class="proj-tags"><span class="proj-tag">Android</span><span class="proj-tag">iOS</span><span class="proj-tag">Kotlin</span><span class="proj-tag">Swift</span><span class="proj-tag">Node.js</span></div>
+        <a href="https://github.com/jindvir-singh" target="_blank" class="proj-link">View on GitHub →</a>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-type">App Design + Dev · May–Jun 2023</div>
+        <div class="proj-name">Dieta</div>
+        <div class="proj-desc">Recipe discovery app fetching ingredients, nutrition facts, and meal suggestions via Spoonacular API — with clean filtering by cuisine, diet, and meal type.</div>
+        <div class="proj-tags"><span class="proj-tag">Kotlin</span><span class="proj-tag">XML</span><span class="proj-tag">Spoonacular API</span><span class="proj-tag">UI/UX</span></div>
+        <a href="https://www.figma.com/@jindvir00" target="_blank" class="proj-link">View on Figma →</a>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-type">App Design</div>
+        <div class="proj-name">Makeit & Cooma</div>
+        <div class="proj-desc">UI/UX design explorations — clean interaction patterns and modern mobile-first aesthetics for productivity and lifestyle applications.</div>
+        <div class="proj-tags"><span class="proj-tag">Figma</span><span class="proj-tag">UI/UX</span><span class="proj-tag">Prototyping</span></div>
+        <a href="https://www.figma.com/@jindvir00" target="_blank" class="proj-link">View on Figma →</a>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-type">Training Project</div>
+        <div class="proj-name">Food Ordering App</div>
+        <div class="proj-desc">Full-featured Android food ordering app with live menu data via REST APIs, built during Internshala Android Development training.</div>
+        <div class="proj-tags"><span class="proj-tag">Android</span><span class="proj-tag">Kotlin</span><span class="proj-tag">REST API</span></div>
+        <a href="https://github.com/jindvir-singh" target="_blank" class="proj-link">View on GitHub →</a>
+      </div>
+      <div class="proj-card featured reveal">
+        <div class="proj-type">Enterprise · Consilium Software</div>
+        <div class="proj-name">Silent Monitor SDK</div>
+        <div class="proj-desc">WebRTC-based supervisor monitoring tool for live call observation without participant awareness. Deployed across enterprise contact centers with 99.9% uptime.</div>
+        <div class="proj-tags"><span class="proj-tag">WebRTC</span><span class="proj-tag">Janus</span><span class="proj-tag">Node.js</span><span class="proj-tag">SIP</span></div>
+        <div class="proj-prop">🔒 Proprietary — Enterprise Deployment</div>
+      </div>
+      <div class="proj-card featured reveal">
+        <div class="proj-type">Enterprise · Consilium Software</div>
+        <div class="proj-name">Secure Broadcast Platform</div>
+        <div class="proj-desc">Video broadcasting system with PIN-based authentication and session management. Reduced unauthorized access by 70% across client environments.</div>
+        <div class="proj-tags"><span class="proj-tag">Node.js</span><span class="proj-tag">WebRTC</span><span class="proj-tag">Auth & Sessions</span></div>
+        <div class="proj-prop">🔒 Proprietary — Enterprise Deployment</div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- CERTIFICATIONS -->
+<section id="certs" class="section section-alt">
+  <div class="container">
+    <div class="sec-hdr reveal">
+      <div class="sec-label">Certifications</div>
+      <h2 class="sec-title">Credentials & <span>Learning</span></h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card reveal"><div class="cert-logo">🌐</div><div><div class="cert-issuer">Cisco</div><div class="cert-name">Managing CUBE & Cisco Unified Communications Manager</div><div class="cert-detail">Enterprise VoIP administration, CUBE configuration, and unified communications management.</div></div></div>
+      <div class="cert-card reveal"><div class="cert-logo">🎨</div><div><div class="cert-issuer">Google</div><div class="cert-name">UX Design Professional Certificate</div><div class="cert-detail">User-centered design, wireframing, prototyping, and UX research methodologies.</div></div></div>
+      <div class="cert-card reveal"><div class="cert-logo">🧪</div><div><div class="cert-issuer">NPTEL</div><div class="cert-name">Software Testing</div><div class="cert-detail">Test design techniques, black-box and white-box testing, and quality assurance strategies.</div></div></div>
+      <div class="cert-card reveal"><div class="cert-logo">🤖</div><div><div class="cert-issuer">Coursera</div><div class="cert-name">Machine Learning</div><div class="cert-detail">Supervised and unsupervised learning, regression and classification models.</div></div></div>
+    </div>
+  </div>
+</section>
 
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
+<!-- EDUCATION -->
+<section id="education" class="section section-blue">
+  <div class="container">
+    <div class="sec-hdr reveal">
+      <div class="sec-label">Education</div>
+      <h2 class="sec-title">Academic <span>Foundation</span></h2>
+    </div>
+    <div class="edu-list">
+      <div class="edu-card reveal">
+        <div class="edu-yr">Aug 2020 – May 2024</div>
+        <div><div class="edu-school">Chandigarh University</div><div class="edu-deg">Bachelor of Engineering — Computer Science & Engineering</div></div>
+        <div class="edu-grade">CGPA: 7.54</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-yr">Mar 2019 – May 2020</div>
+        <div><div class="edu-school">Army Public School, Beas</div><div class="edu-deg">12th Standard — Non-Medical (PCM)</div></div>
+        <div class="edu-grade">84.2%</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-yr">2017 – 2018</div>
+        <div><div class="edu-school">Army Public School, Beas</div><div class="edu-deg">10th Standard</div></div>
+        <div class="edu-grade">82.6%</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="sec-hdr reveal">
+      <div class="sec-label">Contact</div>
+      <h2 class="sec-title">Let's Build <span>Something Together</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-title">Have a project<br>in <span>mind?</span></div>
+        <p class="contact-desc">I'm open to full-time roles, freelance collaborations, and interesting engineering challenges. Let's connect and talk about what we can build.</p>
+        <div class="cl-list">
+          <a href="mailto:jindvirsingh00@icloud.com" class="cl-item"><div class="cl-icon">✉️</div><div><div class="cl-type">Email</div><div class="cl-val">jindvirsingh00@icloud.com</div></div><span class="cl-arr">→</span></a>
+          <a href="tel:+919876783493" class="cl-item"><div class="cl-icon">📞</div><div><div class="cl-type">Phone</div><div class="cl-val">+91-9876783493</div></div><span class="cl-arr">→</span></a>
+          <a href="https://linkedin.com/in/jindvir-singh" target="_blank" class="cl-item"><div class="cl-icon">💼</div><div><div class="cl-type">LinkedIn</div><div class="cl-val">linkedin.com/in/jindvir-singh</div></div><span class="cl-arr">→</span></a>
+          <a href="https://github.com/jindvir-singh" target="_blank" class="cl-item"><div class="cl-icon">💻</div><div><div class="cl-type">GitHub</div><div class="cl-val">github.com/jindvir-singh</div></div><span class="cl-arr">→</span></a>
+          <a href="https://twitter.com/jindvir_" target="_blank" class="cl-item"><div class="cl-icon">🐦</div><div><div class="cl-type">Twitter</div><div class="cl-val">@jindvir_</div></div><span class="cl-arr">→</span></a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="form-card">
+          <div class="form-ttl">Send a Message</div>
+          <form action="mailto:jindvirsingh00@icloud.com" method="post" enctype="text/plain">
+            <div class="form-row-grid">
+              <div class="fg"><label class="form-lbl">First Name</label><input type="text" class="form-ctrl" placeholder="John" required></div>
+              <div class="fg"><label class="form-lbl">Last Name</label><input type="text" class="form-ctrl" placeholder="Doe"></div>
+            </div>
+            <div class="fg"><label class="form-lbl">Email Address</label><input type="email" class="form-ctrl" placeholder="john@company.com" required></div>
+            <div class="fg"><label class="form-lbl">Subject</label><input type="text" class="form-ctrl" placeholder="Job Opportunity / Project / Collaboration"></div>
+            <div class="fg"><label class="form-lbl">Message</label><textarea class="form-ctrl" placeholder="Tell me about your project or opportunity..."></textarea></div>
+            <button type="submit" class="btn-submit">Send Message →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2025 <span>Jindvir Singh</span> · All rights reserved</div>
+  <div class="footer-links">
+    <a href="https://github.com/jindvir-singh" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/jindvir-singh" target="_blank">LinkedIn</a>
+    <a href="https://www.figma.com/@jindvir00" target="_blank">Figma</a>
+    <a href="https://twitter.com/jindvir_" target="_blank">Twitter</a>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+    navLinks.forEach(a => a.classList.toggle('active', a.dataset.section === cur));
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); window.scrollTo({ top: t.offsetTop - 68, behavior: 'smooth' }); }
+    });
+  });
+
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  mobileBtn.addEventListener('click', () => mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none');
+  function closeMobile() { mobileMenu.style.display = 'none'; }
+
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 75); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+  const skillObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-fill').forEach(b => b.style.width = b.dataset.width + '%');
+        skillObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.skills-layout').forEach(el => skillObs.observe(el));
+
+  const countObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('[data-count]').forEach(el => {
+          const target = parseInt(el.dataset.count);
+          let cur = 0; const steps = 60;
+          const timer = setInterval(() => {
+            cur = Math.min(cur + target / steps, target);
+            el.textContent = target >= 1000 ? Math.floor(cur).toLocaleString() + '+' : Math.floor(cur);
+            if (cur >= target) clearInterval(timer);
+          }, 1800 / steps);
+        });
+        countObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stats-strip').forEach(el => countObs.observe(el));
+</script>
 </body>
-
 </html>
